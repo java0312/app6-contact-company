@@ -43,4 +43,10 @@ public class CategoryController {
         return ResponseEntity.status(apiResponse.isSuccess() ? 202 : 409).body(apiResponse);
     }
 
+    @DeleteMapping("/{id}")
+    public HttpEntity<?> deleteCategory(@PathVariable UUID id){
+        ApiResponse apiResponse  = categoryService.deleteCategory(id);
+        return ResponseEntity.status(apiResponse.isSuccess() ? 204 : 409).body(apiResponse);
+    }
+
 }

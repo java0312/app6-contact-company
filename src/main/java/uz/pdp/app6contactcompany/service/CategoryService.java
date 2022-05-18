@@ -65,7 +65,36 @@ public class CategoryService {
         if (!(knowRole.isDirector() || knowRole.isManager()))
             return new ApiResponse("You can't add category", false);
 
-        
+        boolean exists = categoryRepository.existsByNameAndCategoryIdAndIdNot(categoryDto.getName(), categoryDto.getCategoryId(), id);
+        if (exists)
+            return new ApiResponse("Category exists!", false);
 
+        Optional<Category> optionalParentCategory = categoryRepository.findById(categoryDto.getCategoryId());
+        if (optionalParentCategory.isEmpty())
+            return new ApiResponse("Parent category not found!", false);
+
+        Optional<Category> optionalCategory = categoryRepository.findById(id);
+        if (optionalCategory.isEmpty())
+            return new ApiResponse("Category not found!", false);
+
+        Category category = optionalCategory.get();
+        category.setName(categoryDto.getName());
+        category.setCategory(optionalCategory.get());
+        categoryRepository.save(category);
+
+        return new ApiResponse("Category edited by " + knowRole.getAuthUser().getEmail(), true);
+    }
+
+    //__DELETE
+    public ApiResponse deleteCategory(UUID id) {
+
+        if (knowRole.isDirector() || knowRole.isManager()) {
+            Optional<Category> optionalCategory = categoryRepository.findById(id);
+            if (optionalCategory.isPresent()) {
+                categoryRepository.deleteById(id);
+                return new ApiResponse("Category deleted!", true);
+            }
+        }
+        return new  ApiResponse("Category not deleted!", false);
     }
 }
