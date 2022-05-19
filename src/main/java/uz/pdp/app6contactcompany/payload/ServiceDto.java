@@ -22,4 +22,5 @@ public class ServiceDto {
     private UUID ussdCodeId;
     private boolean residueAdds = true;
     private boolean active = true;
+    private double price;
 }

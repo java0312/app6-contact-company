@@ -9,11 +9,9 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SimCardDto {
-    private String code;
-    private String number;
-    private String passwordNumber;
-    private UUID userId;
-    private double balance;
-    private UUID tariffId;
+public class PaymentDto {
+    private UUID simCardId;
+    private String type;
+    private double price;
+    private String fromCardNumber;
 }

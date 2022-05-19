@@ -3,11 +3,13 @@ package uz.pdp.app6contactcompany.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uz.pdp.app6contactcompany.entity.SimCard;
+import uz.pdp.app6contactcompany.entity.Tariff;
 import uz.pdp.app6contactcompany.entity.User;
 import uz.pdp.app6contactcompany.my.KnowRole;
 import uz.pdp.app6contactcompany.payload.ApiResponse;
 import uz.pdp.app6contactcompany.payload.SimCardDto;
 import uz.pdp.app6contactcompany.repository.SimCardRepository;
+import uz.pdp.app6contactcompany.repository.TariffRepository;
 import uz.pdp.app6contactcompany.repository.UserRepository;
 
 import java.util.List;
@@ -26,6 +28,9 @@ public class SimCardService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    TariffRepository tariffRepository;
+
     //__ADD
     public ApiResponse addSimCard(SimCardDto simCardDto) {
 
@@ -40,14 +45,28 @@ public class SimCardService {
         if (optionalUser.isEmpty())
             return new ApiResponse("User not found!", false);
 
+        Optional<Tariff> optionalTariff = tariffRepository.findById(simCardDto.getTariffId());
+        if (optionalTariff.isEmpty())
+            return new ApiResponse("Tariff not found!", false);
+
+        Tariff tariff = optionalTariff.get();
+
         SimCard simCard = new SimCard();
         simCard.setPasswordNumber(simCardDto.getPasswordNumber());
         simCard.setUser(optionalUser.get());
         simCard.setCode(simCardDto.getCode());
         simCard.setNumber(simCardDto.getNumber());
-        simCard.setBalance(simCardDto.getBalance());
+        double v = simCardDto.getBalance() - tariff.getPrice() - tariff.getPassPrice();
+        if (v < 0)
+            return new ApiResponse("not enough money", false);
+        simCard.setBalance(v);
+        simCard.setTariff(tariff);
+        simCard.setMg(tariff.getMegabyteIn());
+        simCard.setMin(tariff.getMinuteInNet());
+        simCard.setSms(tariff.getSms());
+
         simCardRepository.save(simCard);
-//
+
         return new ApiResponse("Sim card added!", true);
     }
 

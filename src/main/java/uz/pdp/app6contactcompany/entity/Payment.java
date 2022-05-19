@@ -23,4 +23,6 @@ public class Payment extends AbsEntityIdSimCard {
     @Column(nullable = false)
     private double price;
 
+    private String fromCardNumber;
+
 }

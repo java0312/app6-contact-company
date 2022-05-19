@@ -3,8 +3,10 @@ package uz.pdp.app6contactcompany.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 @Data
@@ -23,7 +25,9 @@ public class Call {
     @ManyToOne(optional = false)
     private SimCard toSimCard;
 
-    @OneToOne
-    private Attachment recording;
+    private Integer minute;
+
+    @CreationTimestamp
+    private Timestamp calledAt;
 
 }

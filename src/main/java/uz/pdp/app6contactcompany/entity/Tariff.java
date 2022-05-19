@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -53,5 +54,7 @@ public class Tariff {
 
     @OneToOne
     private UssdCode ussdCode;
+
+    private double passPrice;
 
 }

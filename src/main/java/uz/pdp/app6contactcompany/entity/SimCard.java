@@ -30,8 +30,17 @@ public class SimCard {
     @ManyToOne(optional = false)
     private User user;
 
-    private Integer balance;
+    private double balance;
 
     private boolean active = true;
+
+    @ManyToOne
+    private Tariff tariff;
+
+    private double mg;
+
+    private Integer min;
+
+    private Integer sms;
 
 }
