@@ -5,10 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -22,7 +19,7 @@ public class TurnOnService {
     @GeneratedValue
     private UUID id;
 
-    @ManyToOne(optional = false)
+    @ManyToMany
     private SimCard simCard;
 
     @ManyToOne(optional = false)

@@ -19,6 +19,7 @@ import uz.pdp.app6contactcompany.service.AuthService;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+
     @Autowired
     JwtFilter jwtFilter;
 

@@ -20,6 +20,20 @@ public class ServiceController {
     ServiceService serviceService;
 
 
+    /**
+     * Ommabob xizmatlar
+     */
+    @GetMapping("/popularServices")
+    public HttpEntity<?> getAllPopularServices(){
+        List<Service> services = serviceService.getAllPopularServices();
+        return ResponseEntity.ok(services);
+    }
+
+
+
+
+
+
 
 
     /**
@@ -68,6 +82,8 @@ public class ServiceController {
         ApiResponse apiResponse = serviceService.deleteService(id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 202 : 409).body(apiResponse);
     }
+
+
 
 }
 

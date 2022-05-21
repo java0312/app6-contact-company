@@ -128,4 +128,12 @@ public class ServiceService {
         serviceRepository.deleteById(id);
         return new ApiResponse("Service deleted!", true);
     }
+
+
+    /*
+    * Popular servieses
+    * */
+    public List<Service> getAllPopularServices() {
+        return null;
+    }
 }
